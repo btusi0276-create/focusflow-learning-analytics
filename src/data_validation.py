@@ -1,4 +1,5 @@
 from pathlib import Path
+import argparse
 import sys
 
 import pandas as pd
@@ -107,7 +108,30 @@ def validate_learning_log(df: pd.DataFrame) -> list[str]:
 
 def main() -> None:
     project_root = Path(__file__).resolve().parents[1]
-    data_path = project_root / "data" / "sample_learning_log.csv"
+
+    parser = argparse.ArgumentParser(
+        description="检查 FocusFlow 学习行为日志的数据质量。"
+    )
+
+    parser.add_argument(
+        "--input",
+        type=Path,
+        default=project_root / "data" / "sample_learning_log.csv",
+        help=(
+            "待检查的 CSV 文件路径。"
+            "如果不填写，默认检查 data/sample_learning_log.csv。"
+        ),
+    )
+
+    args = parser.parse_args()
+    data_path = args.input
+
+    if not data_path.is_absolute():
+        data_path = project_root / data_path
+
+    if not data_path.exists():
+        print(f"❌ 找不到输入文件：{data_path}")
+        sys.exit(1)
 
     df = pd.read_csv(data_path)
     issues = validate_learning_log(df)
