@@ -50,16 +50,107 @@
 - [ ] 完成探索性数据分析
 - [ ] 完成数据质量检查模块
 - [ ] 构建 Streamlit 数据仪表盘
-- [ ] 连续收集至少 42 天数据
-- [ ] 构建高专注学习日预测模型
+- [ ] 在数据量足够时探索轻量预测模型
 - [ ] 完善项目报告与使用说明
 
 ## 技术栈
 
+### 当前已使用
+
 - Python
 - pandas
-- matplotlib / seaborn
-- Plotly
-- Streamlit
-- scikit-learn
-- GitHub
+- matplotlib
+- Jupyter Notebook
+- Git / GitHub
+
+### 计划使用
+
+- Plotly：交互式数据可视化；
+- Streamlit：构建学习行为分析仪表盘；
+- pytest：为数据质量验证器编写自动化测试；
+- scikit-learn：仅在真实数据量和研究设计足够时，用于探索性建模。
+
+## 如何运行 / How to Run
+
+### 1. 克隆项目
+
+```bash
+git clone https://github.com/btusi0276-create/focusflow-learning-analytics.git
+cd focusflow-learning-analytics
+```
+
+### 2. 创建并启用虚拟环境
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+```
+
+### 3. 安装项目依赖
+
+```bash
+python -m pip install -r requirements.txt
+```
+
+### 4. 验证公开样例数据
+
+```bash
+python src/data_validation.py
+```
+
+预期输出：
+
+```text
+✅ 数据质量检查通过：12 条记录、10 个字段均符合当前规则。
+```
+
+也可以显式指定输入文件：
+
+```bash
+python src/data_validation.py --input data/sample_learning_log.csv
+```
+
+### 5. 验证本地个人数据
+
+个人原始数据应保存在本地的 `data/private/` 文件夹中，且不会上传至公开仓库。
+
+当本地存在个人数据文件后，可运行：
+
+```bash
+python src/data_validation.py --input data/private/my_learning_log.csv
+```
+
+使用下面的命令查看验证器支持的参数：
+
+```bash
+python src/data_validation.py --help
+```
+
+## 数据质量检查
+
+`src/data_validation.py` 会检查：
+
+- 必要字段是否完整；
+- 日期是否有效，以及是否存在重复日期；
+- 睡眠、学习、手机使用和运动时长是否处于合理范围；
+- 睡眠质量和专注评分是否为 1–5；
+- 课程负担是否为“低”“中”或“高”；
+- 深度学习时长是否超过总学习时长。
+
+## 当前状态与后续计划
+
+### 当前已实现
+
+- 每日学习行为记录字段与数据字典；
+- 公开的模拟样例数据；
+- 学习行为日志的数据质量验证器；
+- 支持通过 `--input` 参数检查指定 CSV 文件；
+- 隐私保护规则：真实个人数据不会上传到公开仓库。
+
+### 计划实现
+
+- 连续记录至少 14 天真实数据；
+- 完成真实数据的探索性分析；
+- 构建交互式学习行为仪表盘；
+- 将分析结果整理为个人学习周报；
+- 在数据量充足时，谨慎探索轻量预测模型。
