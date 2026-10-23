@@ -154,3 +154,50 @@ python src/data_validation.py --help
 - 构建交互式学习行为仪表盘；
 - 将分析结果整理为个人学习周报；
 - 在数据量充足时，谨慎探索轻量预测模型。
+
+## 飞书数据导入
+
+FocusFlow 支持将飞书导出的中文字段转换为项目统一的英文数据格式。
+
+示例命令：
+
+```bash
+python src/transform_feishu.py \
+  --input data/sample_feishu_export.csv \
+  --output data/processed/sample_learning_log_from_feishu.csv
+```
+
+转换后可进行数据质量检查：
+
+```bash
+python src/data_validation.py \
+  --input data/processed/sample_learning_log_from_feishu.csv
+```
+
+## 数据分析
+
+分析 Notebook 位于：
+
+```text
+notebooks/02_learning_analysis.ipynb
+```
+
+当前 Notebook 展示了：
+
+- 数据类型与缺失值检查；
+- 学习专注评分的时间趋势；
+- 睡眠时长与专注评分的关系；
+- 娱乐手机时长与深度学习时长的关系；
+- 不同课程负担下的平均专注评分。
+
+## 隐私说明
+
+本仓库只公开模拟数据，用于展示数据处理和分析流程。
+
+真实个人学习记录仅保存在本地 `data/private/` 文件夹中，不上传至 GitHub。
+
+## 当前局限性
+
+- 当前公开分析使用小样本模拟数据；
+- 结果只用于观察变量之间的关联，不能证明因果关系；
+- 后续将积累更多真实个人记录，进一步开展纵向分析。
